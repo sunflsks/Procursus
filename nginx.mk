@@ -10,7 +10,7 @@ nginx-setup: setup openssl pcre libgeoip
 	wget -q -nc -P $(BUILD_SOURCE) https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 	$(call EXTRACT_TAR,nginx-$(NGINX_VERSION).tar.gz,nginx-$(NGINX_VERSION),nginx)
 	$(call DO_PATCH,nginx,nginx,-p0)
-	awk -i inplace '!found && /NGX_PLATFORM/ { print "NGX_PLATFORM=Darwin:19.5.0:iPhone10,1"; found=1 } 1' \
+	gawk -i inplace '!found && /NGX_PLATFORM/ { print "NGX_PLATFORM=Darwin:19.5.0:iPhone10,1"; found=1 } 1' \
 		$(BUILD_WORK)/nginx/configure
 
 COMMON_CONFIGURE_FLAGS= \
