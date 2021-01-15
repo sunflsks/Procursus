@@ -60,7 +60,7 @@ FULL_CONFIGURE_FLAGS= \
 	--with-http_geoip_module=dynamic \
 	--with-http_gunzip_module \
 	--with-http_gzip_static_module \
-	--with-http_image_filter_module=dynamic \
+#	--with-http_image_filter_module=dynamic \
 	--with-http_sub_module \
 	--with-http_xslt_module=dynamic \
 	--with-stream=dynamic \
