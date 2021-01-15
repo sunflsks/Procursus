@@ -2,9 +2,9 @@ ifneq ($(PROCURSUS),1)
 $(error Use the main Makefile)
 endif
 
-SUBPROJECTS += tsschecker
+SUBPROJECTS        += tsschecker
 TSSCHECKER_VERSION := 304
-DEB_TSSCHECKER_V   ?= $(TSSCHECKER_VERSION)
+DEB_TSSCHECKER_V   ?= $(TSSCHECKER_VERSION)-1
 
 tsschecker-setup: setup
 	wget -q -nc -P $(BUILD_SOURCE) https://github.com/tihmstar/tsschecker/archive/$(TSSCHECKER_VERSION).tar.gz
@@ -17,8 +17,6 @@ tsschecker-setup: setup
 	$(SED) -i 's/libirecovery /libirecovery-1.0 /g' $(BUILD_WORK)/tsschecker/configure.ac
 	$(SED) -i '/AC_FUNC_MALLOC/d' $(BUILD_WORK)/tsschecker/configure.ac
 	$(SED) -i '/AC_FUNC_REALLOC/d' $(BUILD_WORK)/tsschecker/configure.ac
-
-	cd $(BUILD_WORK)/tsschecker && git submodule update --init --recursive
 
 
 ifneq ($(wildcard $(BUILD_WORK)/tsschecker/.build_complete),)

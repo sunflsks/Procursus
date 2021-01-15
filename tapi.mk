@@ -3,12 +3,14 @@ $(error Use the main Makefile)
 endif
 
 #SUBPROJECTS   += tapi
-TAPI_VERSION   := 1000.10.8
+TAPI_VERSION   := 1100.0.11
 DEB_TAPI_V     ?= $(TAPI_VERSION)
 
 tapi-setup: setup
-	wget -q -nc -P $(BUILD_SOURCE) https://github.com/Diatrus/apple-libtapi/archive/v$(TAPI_VERSION).tar.gz
-	$(call EXTRACT_TAR,v$(TAPI_VERSION).tar.gz,apple-libtapi-$(TAPI_VERSION),tapi)
+	-[ ! -f "$(BUILD_SOURCE)/tapi-$(TAPI_VERSION).tar.gz" ] && \
+		wget -q -nc -O$(BUILD_SOURCE)/tapi-$(TAPI_VERSION).tar.gz \
+			https://github.com/Diatrus/apple-libtapi/archive/v$(TAPI_VERSION).tar.gz
+	$(call EXTRACT_TAR,tapi-$(TAPI_VERSION).tar.gz,apple-libtapi-$(TAPI_VERSION),tapi)
 	mkdir -p $(BUILD_WORK)/tapi/build
 
 ifneq ($(wildcard $(BUILD_WORK)/tapi/.build_complete),)
@@ -25,7 +27,7 @@ tapi: tapi-setup
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_NAME_DIR=/usr/lib \
 		-DCMAKE_INSTALL_RPATH=/usr \
-		-DCMAKE_OSX_ARCHITECTURES="$(ARCHES)" \
+		-DCMAKE_OSX_ARCHITECTURES="$(MEMO_ARCH)" \
 		-DCMAKE_OSX_SYSROOT="$(TARGET_SYSROOT)" \
 		-DCMAKE_FIND_ROOT_PATH="$(BUILD_BASE)" \
 		-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \

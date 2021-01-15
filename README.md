@@ -4,7 +4,7 @@ A new, powerful cross-compilation system for *OS devices coupled with an APT rep
 
 ## Why?
 
-At it's birth, this build-system was meant to create an APT repo included in a specific jailbreak. That never came to pass, however, and it turned into more of a hobby project.
+At its birth, this build-system was meant to create an APT repo included in a specific jailbreak. That never came to pass, however, and it turned into more of a hobby project.
 
 The current goal of Procursus is to provide a large set of consistently up-to-date *nix tools cross compiled to work on Darwin based platforms. It's built from the ground up in such a way that updating packages is quick and easy, helping to not fall behind upstream.
 
@@ -24,33 +24,42 @@ Building has been made to be simple, yet get the job done properly. Both macOS a
 
 Supported host systems as of 06/04/2020 are iphoneos-arm64, iphoneos-arm, appletvos-arm64, watchos-arm64, and watchos-arm.
 
-|                     Requirements                      |
-|:-----------------------------------------------------:|
-| Xcode + Xcode Commandline Tools + Homebrew (on macOS) |
-| An iOS toolchain, cctools-port recommended (on Linux) |
-| GNU make (On macOS you'll have to run `gmake`)        |
-| GNU coreutils                                         |
-| GNU findutils                                         |
-| GNU sed                                               |
-| GNU tar                                               |
-| GNU patch                                             |
-| bash 5.0                                              |
-| openssl                                               |
-| gnupg                                                 |
-| ldid with sha256 hashes (ldid from Homebrew is fine)  |
-| libtoolize                                            |
-| automake                                              |
-| yacc, lex, groff                                      |
-| fakeroot                                              |
-| dpkg                                                  |
-| zstd                                                  |
-| ncurses 6                                             |
+|                     Requirements                                  |
+|:-----------------------------------------------------------------:|
+| Xcode + Xcode Commandline Tools + Homebrew (on macOS)             |
+| [An iOS toolchain, cctools-port recommended (on Linux)](LINUX.md) |
+| GNU make (On macOS you'll have to run `gmake`)                    |
+| GNU coreutils                                                     |
+| GNU findutils                                                     |
+| GNU sed (gnu-sed in Homebrew)                                     |
+| GNU tar (gnu-tar in Homebrew)                                     |
+| GNU patch (gpatch in Homebrew)                                    |
+| bash 5.0                                                          |
+| openssl                                                           |
+| gnupg                                                             |
+| ldid with sha256 hashes (ldid from Homebrew is fine)              |
+| libtoolize                                                        |
+| automake                                                          |
+| yacc, lex, groff                                                  |
+| fakeroot                                                          |
+| dpkg                                                              |
+| zstd                                                              |
+| ncurses 6                                                         |
+| wget                                                              |
+| cmake                                                             |
+| docbook-xsl                                                       |
+| python 3.9                                                        |
+On macOS, all the build requirements can be installed with the following command.
+```
+brew install make bash wget gnu-tar gnu-sed gnupg ldid cmake automake groff gpatch findutils coreutils fakeroot zstd dpkg ncurses docbook-xsl python3
+```
 
 | Supported commands    | Function                                                                                                                            |
 |:--------------------------------------:|:-------------------------------------------------------------------------------------------------------------------|
 | `make` or `make all` or `make package` | Compiles the entire Procursus suite and packs it into debian packages.                                             |
 | `make (tool)`                          | Used to compile only a specified tool.                                                                             |
 | `make (tool)-package`                  | Used to compile only a specified tool and pack it into a debian package.                                           |
+| `make rebuild-(tool)`                  | Used to recompile only a specified tool after it's already been compiled before.                                   |
 | `make rebuild-(tool)-package`          | Used to recompile only a specified tool after it's already been compiled before and pack it into a debian package. |
 | `make everything`                      | Compiles the entire Procursus suite for every supported host platform and packs it into debian packages.           |
 | `make clean`                           | Clean out $(BUILD_STAGE), $(BUILD_BASE), and $(BUILD_WORK).                                                        |

@@ -4,7 +4,7 @@ endif
 
 SUBPROJECTS    += man-db
 MAN-DB_VERSION := 2.9.3
-DEB_MAN-DB_V   ?= $(MAN-DB_VERSION)
+DEB_MAN-DB_V   ?= $(MAN-DB_VERSION)-3
 
 man-db-setup: setup
 	wget -q -nc -P $(BUILD_SOURCE) https://download.savannah.gnu.org/releases/man-db/man-db-$(MAN-DB_VERSION).tar.xz{,.asc}
@@ -15,7 +15,7 @@ ifneq ($(wildcard $(BUILD_WORK)/man-db/.build_complete),)
 man-db:
 	@echo "Using previously built man-db."
 else
-man-db: man-db-setup libpipeline libgdbm gettext
+man-db: man-db-setup libpipeline libgdbm gettext zstd
 	cd $(BUILD_WORK)/man-db && ./configure -C \
 		--host=$(GNU_HOST_TRIPLE) \
 		--prefix=/usr \

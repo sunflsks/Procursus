@@ -7,7 +7,7 @@ STRAPPROJECTS   += openssl
 else
 SUBPROJECTS     += openssl
 endif
-OPENSSL_VERSION := 1.1.1g
+OPENSSL_VERSION := 1.1.1i
 DEB_OPENSSL_V   ?= $(OPENSSL_VERSION)
 
 ifneq (,$(findstring aarch64,$(GNU_HOST_TRIPLE)))
@@ -70,6 +70,7 @@ openssl-package: openssl-stage
 
 	# openssl.mk Prep libssl-dev
 	cp -a $(BUILD_STAGE)/openssl/usr/lib/{lib{ssl,crypto}.{a,dylib},pkgconfig} $(BUILD_DIST)/libssl-dev/usr/lib
+	cp -a $(BUILD_STAGE)/openssl/usr/include $(BUILD_DIST)/libssl-dev/usr
 	
 	# openssl.mk Prep openssl
 	cp -a $(BUILD_STAGE)/openssl/etc $(BUILD_DIST)/openssl

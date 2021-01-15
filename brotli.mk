@@ -3,14 +3,13 @@ $(error Use the main Makefile)
 endif
 
 SUBPROJECTS      += brotli
-BROTLI_VERSION   := 1.0.7
+BROTLI_VERSION   := 1.0.9
 DEB_BROTLI_V     ?= $(BROTLI_VERSION)
 
 brotli-setup: setup
-ifeq ($(wildcard $(BUILD_SOURCE)/brotli-$(BROTLI_VERSION).tar.gz),)
-	wget -q -nc -P $(BUILD_SOURCE) https://github.com/google/brotli/archive/v$(BROTLI_VERSION).tar.gz
-	mv $(BUILD_SOURCE)/v$(BROTLI_VERSION).tar.gz $(BUILD_SOURCE)/brotli-$(BROTLI_VERSION).tar.gz
-endif
+	-[ ! -f "$(BUILD_SOURCE)/brotli-$(BROTLI_VERSION).tar.gz" ] && \
+		wget -q -nc -O$(BUILD_SOURCE)/brotli-$(BROTLI_VERSION).tar.gz \
+			https://github.com/google/brotli/archive/v$(BROTLI_VERSION).tar.gz
 	$(call EXTRACT_TAR,brotli-$(BROTLI_VERSION).tar.gz,brotli-$(BROTLI_VERSION),brotli)
 
 ifneq ($(wildcard $(BUILD_WORK)/brotli/.build_complete),)
@@ -33,6 +32,8 @@ brotli: brotli-setup
 	+$(MAKE) -C $(BUILD_WORK)/brotli
 	+$(MAKE) -C $(BUILD_WORK)/brotli install \
 		DESTDIR="$(BUILD_STAGE)/brotli"
+	+$(MAKE) -C $(BUILD_WORK)/brotli install \
+		DESTDIR="$(BUILD_BASE)"
 	for lib in $(BUILD_STAGE)/brotli/usr/lib/libbrotli{common,dec,enc}-static.a; do \
 		if [ -f $$lib ]; then \
 			mv $$lib $${lib/-static.a/.a}; \
