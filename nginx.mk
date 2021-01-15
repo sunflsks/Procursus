@@ -126,8 +126,14 @@ nginx-package: nginx-stage
 	rm -rf $(BUILD_DIST)/nginx
 	mkdir -p $(BUILD_DIST)/nginx
 
-	# nginx.mk Prep nginx
-	cp -a $(BUILD_STAGE)/nginx/{etc,var,usr} $(BUILD_DIST)/nginx
+	# Choose whether to package light or full
+	if [[ -f $(BUILD_WORK)/nginx/.full_build_complete ]]; then \
+		echo "Packaging nginx-full"; \
+		cp -a $(BUILD_STAGE)/nginx-full/{etc,var,usr} $(BUILD_DIST)/nginx; \
+	elif [[ -f $(BUILD_WORK)/nginx/.light_build_complete ]]; then \
+		echo "Packaging nginx-light"; \
+		cp -a $(BUILD_STAGE)/nginx-light/{etc,var,usr} $(BUILD_DIST)/nginx; \
+	fi
 
 	mkdir -p $(BUILD_DIST)/nginx/var/lib/nginx
 
