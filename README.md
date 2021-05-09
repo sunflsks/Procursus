@@ -24,6 +24,9 @@ Building has been made to be simple, yet get the job done properly. Both macOS a
 
 Supported host systems as of 06/04/2020 are iphoneos-arm64, iphoneos-arm, appletvos-arm64, watchos-arm64, and watchos-arm.
 
+### NOTE FOR 32 BIT:
+There are some extra steps you need to take. First off, install a compatible rust compiler from [here](https://sudhip.com/files/other/armv7-apple-ios-stage1.tar.zst)
+
 |                     Requirements                                  |
 |:-----------------------------------------------------------------:|
 | Xcode + Xcode Commandline Tools + Homebrew (on macOS)             |
